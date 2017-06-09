@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Formularios;
 
-import Clases.Empleados;
 import Clases.Proveedores;
-import Utilidades.Empleado_Utilidades;
 import Utilidades.Proveedor_Utilidades;
 import Utilidades.vld_textbox;
 import java.io.File;
@@ -19,23 +12,103 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author User
- */
-public class Frm_Proveedor extends javax.swing.JFrame {
+public class Frm_Proveedor extends javax.swing.JInternalFrame {
 
+    /**
+     * Creates new form Frm_Proveedor1
+     */
     public Frm_Proveedor() {
         initComponents();
         Disable();
         tabla();
-        this.setLocationRelativeTo(null);
+        hilo.start();
     }
 
+    public static String fechaActual() {
+        Date Fecha = new Date();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY");
+        return formatoFecha.format(Fecha);
+
+    }
+
+    public String getHora() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String date = sdf.format(new Date());
+        return date;
+    }
+    Thread hilo = new Thread() {
+        public void run() {
+            for (int i = 0; i < 100000000; i++) {
+                lblhora.setText(getHora().substring(0, 3));
+                lblminutos.setText(getHora().substring(3, 6));
+                lblsegundos.setText(getHora().substring(6, 8));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(factura.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+    };
+
+    public Boolean camposllenos() {
+        JTextField campos[] = {txtcelular, txtcode, txtdes, txtdirec, txte, txtele, txtempresa, txtprod, txtsitio};
+        if (new vld_textbox().camposLlenos(campos)) {
+                return true;
+        }
+        return false;
+    }
+    
+    public void Disable(){
+        txtcelular.enable(false);
+        txtcode.enable(false);
+        txtdes.enable(false);
+        txtdirec.enable(false);
+        txte.enable(false);
+        txtempresa.enable(false);
+        txtprod.enable(false);
+        txtsitio.enable(false);
+        txtele.enable(false);
+        date_fecha.enable(false);
+    }
+    public void borrar(){
+        txtcelular.setText("");
+        txtcode.setText("");
+        txtdes.setText("");
+        txtdirec.setText("");
+        txte.setText("");
+        txtempresa.setText("");
+        txtprod.setText("");
+        txtsitio.setText("");
+        txtele.setText("");
+        date_fecha.setDate(new Date());
+    }
+    
+    public void cargarProveedores() {
+        File f = new File("src\\Archivos\\proveedores.txt");
+        try {
+
+            if (f.exists()) {
+                FileInputStream fis = new FileInputStream(f);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                proveedores = (ArrayList<Proveedores>) ois.readObject();
+                fis.close();
+                ois.close();
+                System.out.println("archivo cargado");
+            } else {
+                f.createNewFile();
+                System.out.println("archivo creado");
+            }
+        } catch (Exception e) {
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,25 +145,39 @@ public class Frm_Proveedor extends javax.swing.JFrame {
         txte = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla_prov = new javax.swing.JTable();
-        jLabel17 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         date_fecha = new com.toedter.calendar.JDateChooser();
         modificar = new javax.swing.JButton();
         buscar = new javax.swing.JButton();
+        lblsegundos = new javax.swing.JLabel();
+        lblminutos = new javax.swing.JLabel();
+        lblhora = new javax.swing.JLabel();
+        lblfecha = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Niagara Solid", 1, 48)); // NOI18N
         jLabel2.setText("Nuevo proveedor");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 240, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, 240, -1));
 
         nuev.setFont(new java.awt.Font("Niagara Solid", 1, 24)); // NOI18N
         nuev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/agregar.png"))); // NOI18N
@@ -132,7 +219,7 @@ public class Frm_Proveedor extends javax.swing.JFrame {
         getContentPane().add(salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 480, 50, 50));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/1487471876_mypc_save.png"))); // NOI18N
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, 120, 120));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 20, 120, 120));
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 255, 255)));
 
@@ -233,10 +320,6 @@ public class Frm_Proveedor extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 510, 320));
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel17.setText("Hora:");
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, -1, -1));
-
         jLabel13.setFont(new java.awt.Font("Niagara Solid", 1, 18)); // NOI18N
         jLabel13.setText("Fecha");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, -1, -1));
@@ -258,11 +341,44 @@ public class Frm_Proveedor extends javax.swing.JFrame {
         });
         getContentPane().add(buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, -1));
 
+        lblsegundos.setBackground(new java.awt.Color(51, 51, 51));
+        lblsegundos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblsegundos.setText("SS");
+        getContentPane().add(lblsegundos, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 20, -1, -1));
+
+        lblminutos.setBackground(new java.awt.Color(51, 51, 51));
+        lblminutos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblminutos.setText("MM");
+        getContentPane().add(lblminutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 20, -1, -1));
+
+        lblhora.setBackground(new java.awt.Color(51, 51, 51));
+        lblhora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblhora.setText("HH");
+        getContentPane().add(lblhora, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
+
+        lblfecha.setBackground(new java.awt.Color(51, 51, 51));
+        lblfecha.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblfecha.setText("SS");
+        getContentPane().add(lblfecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoazulceleste_1.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void nuevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevActionPerformed
+        txtcelular.enable(true);
+        txtcode.enable(true);
+        txtdes.enable(true);
+        txtdirec.enable(true);
+        txte.enable(true);
+        txtempresa.enable(true);
+        txtprod.enable(true);
+        txtsitio.enable(true);
+        txtele.enable(true);
+        date_fecha.enable(true);       // TODO add your handling code here:
+    }//GEN-LAST:event_nuevActionPerformed
 
     private void guardaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardaActionPerformed
         if (!camposllenos()) {
@@ -291,7 +407,7 @@ public class Frm_Proveedor extends javax.swing.JFrame {
             p.setSitioweb(txtsitio.getText());
             p.setTelefono(txtele.getText());
             p.setFecha(String.valueOf(date_fecha.getCalendar().get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(date_fecha.getCalendar().get(Calendar.MONTH) + 1) + "/" + String.valueOf(date_fecha.getCalendar().get(Calendar.YEAR)).toString());
-            
+
             proveedores.add(p);
             Proveedor_Utilidades pun = new Proveedor_Utilidades();
             pun.setRuta("src\\Archivos\\proveedores.txt");
@@ -304,87 +420,40 @@ public class Frm_Proveedor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_guardaActionPerformed
 
-    public Boolean camposllenos() {
-        JTextField campos[] = {txtcelular, txtcode, txtdes, txtdirec, txte, txtele, txtempresa, txtprod, txtsitio};
-        if (new vld_textbox().camposLlenos(campos)) {
-                return true;
-        }
-        return false;
-    }
-    
-    public void Disable(){
-        txtcelular.enable(false);
-        txtcode.enable(false);
-        txtdes.enable(false);
-        txtdirec.enable(false);
-        txte.enable(false);
-        txtempresa.enable(false);
-        txtprod.enable(false);
-        txtsitio.enable(false);
-        txtele.enable(false);
-        date_fecha.enable(false);
-    }
-    public void borrar(){
-        txtcelular.setText("");
-        txtcode.setText("");
-        txtdes.setText("");
-        txtdirec.setText("");
-        txte.setText("");
-        txtempresa.setText("");
-        txtprod.setText("");
-        txtsitio.setText("");
-        txtele.setText("");
-        date_fecha.setDate(new Date());
-    }
-    
-    public static String fechaActual() {
-        Date Fecha = new Date();
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY");
-        return formatoFecha.format(Fecha);
-    }
-    
-    public void cargarProveedores() {
-        File f = new File("src\\Archivos\\proveedores.txt");
-        try {
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        Proveedor_Utilidades pu = new Proveedor_Utilidades();
+        pu.setRuta("src\\Archivos\\proveedores.txt");
 
-            if (f.exists()) {
-                FileInputStream fis = new FileInputStream(f);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                proveedores = (ArrayList<Proveedores>) ois.readObject();
-                fis.close();
-                ois.close();
-                System.out.println("archivo cargado");
-            } else {
-                f.createNewFile();
-                System.out.println("archivo creado");
+        for (Proveedores elem : proveedores) {
+
+            if (codigo.equals(elem.getCodigo())) {
+                proveedores.remove(elem);
+                pu.guardarProveedor(proveedores);
+
+                JOptionPane.showMessageDialog(null, "Eliminado!!");
+                borrar();
+                tabla();
+                return;
             }
-        } catch (Exception e) {
-        }
-    }
-    
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_eliminarActionPerformed
+
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
         dispose();
-        Menu inter = new Menu();
-        inter.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_salirActionPerformed
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        cargarProveedores();        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowOpened
+    private void txtcodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodeKeyTyped
+        new vld_textbox().soloNumeros(evt);        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcodeKeyTyped
 
-    private void nuevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevActionPerformed
-        txtcelular.enable(true);
-        txtcode.enable(true);
-        txtdes.enable(true);
-        txtdirec.enable(true);
-        txte.enable(true);
-        txtempresa.enable(true);
-        txtprod.enable(true);
-        txtsitio.enable(true);
-        txtele.enable(true);
-        date_fecha.enable(true);       // TODO add your handling code here:
-    }//GEN-LAST:event_nuevActionPerformed
+    private void txteleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txteleKeyTyped
+        new vld_textbox().soloNumeros(evt);        // TODO add your handling code here:
+    }//GEN-LAST:event_txteleKeyTyped
+
+    private void txtcelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcelularKeyTyped
+        new vld_textbox().soloNumeros(evt);        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcelularKeyTyped
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
         if (!camposllenos()) {
@@ -394,7 +463,7 @@ public class Frm_Proveedor extends javax.swing.JFrame {
         try {
             remover:
             for (Proveedores elem : proveedores) {
-               
+
                 if (txtcode.getText().trim().equals(elem.getCodigo())) {
                     proveedores.remove(elem);
                     break remover;
@@ -415,7 +484,7 @@ public class Frm_Proveedor extends javax.swing.JFrame {
             p.setSitioweb(txtsitio.getText());
             p.setTelefono(txtele.getText());
             p.setFecha(String.valueOf(date_fecha.getCalendar().get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(date_fecha.getCalendar().get(Calendar.MONTH) + 1) + "/" + String.valueOf(date_fecha.getCalendar().get(Calendar.YEAR)).toString());
-            
+
             proveedores.add(p);
             Proveedor_Utilidades pu = new Proveedor_Utilidades();
             pu.setRuta("src\\Archivos\\proveedores.txt");
@@ -429,24 +498,6 @@ public class Frm_Proveedor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "error");
         }        // TODO add your handling code here:
     }//GEN-LAST:event_modificarActionPerformed
-
-    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
-        Proveedor_Utilidades pu = new Proveedor_Utilidades();
-        pu.setRuta("src\\Archivos\\proveedores.txt");
-
-        for (Proveedores elem : proveedores) {
-
-            if (codigo.equals(elem.getCodigo())) {
-                proveedores.remove(elem);
-                pu.guardarProveedor(proveedores);
-
-                JOptionPane.showMessageDialog(null, "Eliminado!!");
-                borrar();
-                tabla();
-                return;
-            }
-        }        // TODO add your handling code here:
-    }//GEN-LAST:event_eliminarActionPerformed
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         Boolean confirma = false;
@@ -463,24 +514,12 @@ public class Frm_Proveedor extends javax.swing.JFrame {
                 txtsitio.setText(elem.getSitioweb());
                 confirma=true;
                 //date_fecha.setDate(elem.getFecha_registro());
-            } 
+            }
         }        // TODO add your handling code here:
         if(!confirma) {
-                JOptionPane.showMessageDialog(null, "CEDULA NO REGISTRADA");
+            JOptionPane.showMessageDialog(null, "CEDULA NO REGISTRADA");
         }        // TODO add your handling code here:
     }//GEN-LAST:event_buscarActionPerformed
-
-    private void txtcodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodeKeyTyped
-        new vld_textbox().soloNumeros(evt);        // TODO add your handling code here:
-    }//GEN-LAST:event_txtcodeKeyTyped
-
-    private void txteleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txteleKeyTyped
-        new vld_textbox().soloNumeros(evt);        // TODO add your handling code here:
-    }//GEN-LAST:event_txteleKeyTyped
-
-    private void txtcelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcelularKeyTyped
-        new vld_textbox().soloNumeros(evt);        // TODO add your handling code here:
-    }//GEN-LAST:event_txtcelularKeyTyped
 
     public void tabla() {
 
@@ -507,43 +546,18 @@ public class Frm_Proveedor extends javax.swing.JFrame {
 
         Tabla_prov.setModel(tm);
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_Proveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_Proveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_Proveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_Proveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        cargarProveedores();  
+        lblfecha.setText(fechaActual());// TODO add your handling code here:
+    }//GEN-LAST:event_formInternalFrameOpened
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Frm_Proveedor().setVisible(true);
-            }
-        });
-    }
+    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+        lblhora.setText(getHora().substring(0, 3));
+        lblminutos.setText(getHora().substring(3, 6));
+        lblsegundos.setText(getHora().substring(6, 8));        // TODO add your handling code here:
+    }//GEN-LAST:event_formInternalFrameActivated
+
 ArrayList<Proveedores> proveedores = new ArrayList<Proveedores>();
 String codigo;
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -557,7 +571,6 @@ String codigo;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -568,6 +581,10 @@ String codigo;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblfecha;
+    private javax.swing.JLabel lblhora;
+    private javax.swing.JLabel lblminutos;
+    private javax.swing.JLabel lblsegundos;
     private javax.swing.JButton modificar;
     private javax.swing.JButton nuev;
     private javax.swing.JButton salir;

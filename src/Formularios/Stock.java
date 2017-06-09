@@ -1,28 +1,86 @@
-
 package Formularios;
 
 import Clases.Inventarios;
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class Stock extends javax.swing.JFrame {
+public class Stock extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Stock
+     * Creates new form Stock1
      */
     public Stock() {
         initComponents();
-        setLocationRelativeTo(null);
-        //metodo
         cerrar();
         cargarServicios();
         llenarCombo();
+        hilo.start();
+    }
+
+    public static String fechaActual() {
+        Date Fecha = new Date();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY");
+        return formatoFecha.format(Fecha);
+
+    }
+
+    public String getHora() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String date = sdf.format(new Date());
+        return date;
+    }
+    Thread hilo = new Thread() {
+        public void run() {
+            for (int i = 0; i < 100000000; i++) {
+                lblhora.setText(getHora().substring(0, 3));
+                lblminutos.setText(getHora().substring(3, 6));
+                lblsegundos.setText(getHora().substring(6, 8));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(factura.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+    };
+
+    public void cerrar() {
+        try {
+            this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    confirmarSalida();
+
+                }
+            });
+            this.setVisible(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void confirmarSalida() {
+        int valor = JOptionPane.showConfirmDialog(this, "¿ESTA SEGURO DE CERRAR el PROGRAMA?", "ADVERTENCIA", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (valor == JOptionPane.YES_NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "GRACIAS POR SU VISITA", "GRACIAS", JOptionPane.INFORMATION_MESSAGE);
+
+            System.exit(0);
+        }
+
     }
 
     /**
@@ -46,8 +104,29 @@ public class Stock extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        lblfecha = new javax.swing.JLabel();
+        lblsegundos = new javax.swing.JLabel();
+        lblminutos = new javax.swing.JLabel();
+        lblhora = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -101,6 +180,22 @@ public class Stock extends javax.swing.JFrame {
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
 
+        lblfecha.setBackground(new java.awt.Color(51, 51, 51));
+        lblfecha.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblfecha.setText("SS");
+
+        lblsegundos.setBackground(new java.awt.Color(51, 51, 51));
+        lblsegundos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblsegundos.setText("SS");
+
+        lblminutos.setBackground(new java.awt.Color(51, 51, 51));
+        lblminutos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblminutos.setText("MM");
+
+        lblhora.setBackground(new java.awt.Color(51, 51, 51));
+        lblhora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblhora.setText("HH");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,131 +203,87 @@ public class Stock extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(181, 181, 181)
+                .addComponent(lblfecha)
+                .addGap(8, 8, 8)
+                .addComponent(lblhora)
+                .addGap(12, 12, 12)
+                .addComponent(lblminutos)
+                .addGap(8, 8, 8)
+                .addComponent(lblsegundos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblfecha)
+                    .addComponent(lblhora)
+                    .addComponent(lblminutos)
+                    .addComponent(lblsegundos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void cerrar(){
-        try {
-            this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            addWindowListener(new WindowAdapter() {
-                      public void windowClosing(WindowEvent e){
-                          confirmarSalida();
-                          
-                      }
-            });
-            this.setVisible(true);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-            
-    }
-    
-    public void confirmarSalida(){
-        int valor = JOptionPane.showConfirmDialog(this, "¿ESTA SEGURO DE CERRAR el PROGRAMA?" , "ADVERTENCIA" , JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (valor==JOptionPane.YES_NO_OPTION){
-            JOptionPane.showMessageDialog(null, "GRACIAS POR SU VISITA" , "GRACIAS", JOptionPane.INFORMATION_MESSAGE);
-        
-        System.exit(0);
-        }
-        
-    }
-    
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        Menu i = new Menu();
-        i.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        for(Inventarios p : productos){
-            if(p.getNombre().equalsIgnoreCase(jComboBox1.getSelectedItem().toString())){
-                jTextField1.setText(p.getCantidad()+"");
+        for (Inventarios p : productos) {
+            if (p.getNombre().equalsIgnoreCase(jComboBox1.getSelectedItem().toString())) {
+                jTextField1.setText(p.getCantidad() + "");
                 jTextField2.setText(p.getPrecio().toString());
-                Double t=0.0;
-                t=(p.getPrecio()*p.getCantidad());
+                Double t = 0.0;
+                t = (p.getPrecio() * p.getCantidad());
                 jTextField3.setText(t.toString());
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Stock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Stock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Stock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Stock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Stock().setVisible(true);
-            }
-        });
-    }
-    public void llenarCombo(){
-        for(Inventarios p : productos){
+    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+        lblhora.setText(getHora().substring(0, 3));
+        lblminutos.setText(getHora().substring(3, 6));
+        lblsegundos.setText(getHora().substring(6, 8));        // TODO add your handling code here:
+    }//GEN-LAST:event_formInternalFrameActivated
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        lblfecha.setText(fechaActual());        // TODO add your handling code here:
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    public void llenarCombo() {
+        for (Inventarios p : productos) {
             jComboBox1.addItem(p.getNombre());
         }
     }
-public void cargarServicios(){
-    
-    File f =new File("src\\Archivos\\inventarios.txt");
+
+    public void cargarServicios() {
+
+        File f = new File("src\\Archivos\\inventarios.txt");
         try {
-            
-              if(f.exists())
-            {
-                FileInputStream fis=new FileInputStream(f);
-                ObjectInputStream ois=new ObjectInputStream(fis);
-                productos=(ArrayList<Inventarios>) ois.readObject();
+
+            if (f.exists()) {
+                FileInputStream fis = new FileInputStream(f);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                productos = (ArrayList<Inventarios>) ois.readObject();
                 fis.close();
                 ois.close();
                 System.out.println("archivo cargado");
-            }
-            else{
-            f.createNewFile();
+            } else {
+                f.createNewFile();
                 System.out.println("archivo creado");
             }
         } catch (Exception e) {
         }
-}
-ArrayList<Inventarios> productos = new ArrayList<>();
+    }
+    ArrayList<Inventarios> productos = new ArrayList<>();
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -246,5 +297,9 @@ ArrayList<Inventarios> productos = new ArrayList<>();
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lblfecha;
+    private javax.swing.JLabel lblhora;
+    private javax.swing.JLabel lblminutos;
+    private javax.swing.JLabel lblsegundos;
     // End of variables declaration//GEN-END:variables
 }

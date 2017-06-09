@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Formularios;
 
-/**
- *
- * @author dell
- */
 public class Menu extends javax.swing.JFrame {
 
     /**
@@ -28,6 +19,7 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -55,6 +47,17 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem20 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1227, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
 
         jMenu1.setText("REGISTROS");
 
@@ -238,11 +241,15 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -250,110 +257,110 @@ public class Menu extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         Frm_Empleado fe = new Frm_Empleado();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);     // TODO add your handling code here:
+        fe.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         Frm_Cliente fe = new Frm_Cliente();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);     // TODO add your handling code here:
+        fe.show();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         Frm_Inventario fe = new Frm_Inventario();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);     // TODO add your handling code here:
+        fe.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         Compras fe = new Compras();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);     // TODO add your handling code here:
+        fe.show();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         Frm_Proveedor fe = new Frm_Proveedor();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);     // TODO add your handling code here:
+        fe.show();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         Frm_Cliente_Buscar fe = new Frm_Cliente_Buscar();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);     // TODO add your handling code here:
+        fe.show();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         Frm_Proveedor_Buscar fe = new Frm_Proveedor_Buscar();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);     // TODO add your handling code here:
+        fe.show();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         Cons_Compras fe = new Cons_Compras();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);
+        fe.show();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         Frm_Empleado_Buscar fe = new Frm_Empleado_Buscar();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);
+        fe.show();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         Frm_Inventario_Buscar fe = new Frm_Inventario_Buscar();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);
+        fe.show();
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         factura fe = new factura();
-        fe.show();      // TODO add your handling code here:
-        dispose();
+        jPanel1.add(fe);
+        fe.show();
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         Cierre_Caja fe = new Cierre_Caja();
+        jPanel1.add(fe);
         fe.show();
-        dispose();
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         Cons_Facturas fe = new Cons_Facturas();
+        jPanel1.add(fe);
         fe.show();
-        dispose();
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         RegistroUsuarios fe = new RegistroUsuarios();
+        jPanel1.add(fe);
         fe.show();
-        dispose();
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
         ConsultaUsuarios fe = new ConsultaUsuarios();
+        jPanel1.add(fe);
         fe.show();
-        dispose();
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         listestadisticas fe = new listestadisticas();
+        jPanel1.add(fe);
         fe.show();
-        dispose();
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
         Frm_Est_Productos fe = new Frm_Est_Productos();
+        jPanel1.add(fe);
         fe.show();
-        dispose();
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         Stock fe = new Stock();
+        jPanel1.add(fe);
         fe.show();
-        dispose();
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
@@ -427,5 +434,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

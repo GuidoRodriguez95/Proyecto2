@@ -1,31 +1,60 @@
 package Formularios;
+
 import Clases.Empleados;
-import Clases.Proveedores;
 import Utilidades.Empleado_Utilidades;
-import Utilidades.Proveedor_Utilidades;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-public class Frm_Empleado_Buscar extends javax.swing.JFrame {
+public class Frm_Empleado_Buscar extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Busqueda
+     * Creates new form Frm_Empleado_Buscar1
      */
     public Frm_Empleado_Buscar() {
         initComponents();
-        this.setLocationRelativeTo(null);
         tabla();
-        
+        hilo.start();
     }
-    
+
+    public static String fechaActual() {
+        Date Fecha = new Date();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/YYYY");
+        return formatoFecha.format(Fecha);
+
+    }
+
+    public String getHora() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String date = sdf.format(new Date());
+        return date;
+    }
+    Thread hilo = new Thread() {
+        public void run() {
+            for (int i = 0; i < 100000000; i++) {
+                lblhora.setText(getHora().substring(0, 3));
+                lblminutos.setText(getHora().substring(3, 6));
+                lblsegundos.setText(getHora().substring(6, 8));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(factura.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+    };
+
     public void filtro() {
         
         int columnaABuscar = 0;
@@ -64,7 +93,7 @@ public class Frm_Empleado_Buscar extends javax.swing.JFrame {
 
         Tabla_em.setModel(tm);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,40 +103,53 @@ public class Frm_Empleado_Buscar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel8 = new javax.swing.JLabel();
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         radioCodigo = new javax.swing.JRadioButton();
         radioNombre = new javax.swing.JRadioButton();
         t1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        salir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla_em = new javax.swing.JTable();
+        salir = new javax.swing.JButton();
+        lblfecha = new javax.swing.JLabel();
+        lblsegundos = new javax.swing.JLabel();
+        lblminutos = new javax.swing.JLabel();
+        lblhora = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/1487472907_deliverables.png"))); // NOI18N
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Niagara Solid", 1, 48)); // NOI18N
-        jLabel2.setText("Buscar Empleado");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 300, 50));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/lupa.png"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 170, 160));
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Seleccionar Método de Búsqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Niagara Solid", 1, 18))); // NOI18N
 
         radioCodigo.setBackground(new java.awt.Color(102, 102, 255));
-        buttonGroup1.add(radioCodigo);
         radioCodigo.setFont(new java.awt.Font("Niagara Solid", 1, 18)); // NOI18N
         radioCodigo.setText("Código");
 
         radioNombre.setBackground(new java.awt.Color(102, 102, 255));
-        buttonGroup1.add(radioNombre);
         radioNombre.setFont(new java.awt.Font("Niagara Solid", 1, 18)); // NOI18N
         radioNombre.setText("Nombre");
         radioNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -155,19 +197,11 @@ public class Frm_Empleado_Buscar extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 370, -1));
+
+        jLabel2.setFont(new java.awt.Font("Niagara Solid", 1, 48)); // NOI18N
+        jLabel2.setText("Buscar Empleado");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 300, 50));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 300, 30));
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/lupa.png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 170, 160));
-
-        salir.setFont(new java.awt.Font("Niagara Solid", 1, 24)); // NOI18N
-        salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/1487472258_Exit.png"))); // NOI18N
-        salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salirActionPerformed(evt);
-            }
-        });
-        getContentPane().add(salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 420, 40, 40));
 
         Tabla_em.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -183,26 +217,48 @@ public class Frm_Empleado_Buscar extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 670, 190));
 
+        salir.setFont(new java.awt.Font("Niagara Solid", 1, 24)); // NOI18N
+        salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/1487472258_Exit.png"))); // NOI18N
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 420, 40, 40));
+
+        lblfecha.setBackground(new java.awt.Color(51, 51, 51));
+        lblfecha.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblfecha.setText("SS");
+        getContentPane().add(lblfecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        lblsegundos.setBackground(new java.awt.Color(51, 51, 51));
+        lblsegundos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblsegundos.setText("SS");
+        getContentPane().add(lblsegundos, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
+
+        lblminutos.setBackground(new java.awt.Color(51, 51, 51));
+        lblminutos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblminutos.setText("MM");
+        getContentPane().add(lblminutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
+
+        lblhora.setBackground(new java.awt.Color(51, 51, 51));
+        lblhora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblhora.setText("HH");
+        getContentPane().add(lblhora, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoazulceleste.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 470));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void t1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_t1ActionPerformed
-
-    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
-        dispose();
-        Menu m=new Menu();
-        m.setVisible(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_salirActionPerformed
-
     private void radioNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radioNombreActionPerformed
+
+    private void t1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t1ActionPerformed
 
     private void t1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t1KeyTyped
         t1.addKeyListener(new KeyAdapter() {
@@ -217,54 +273,34 @@ public class Frm_Empleado_Buscar extends javax.swing.JFrame {
         Tabla_em.setRowSorter(trsFiltro);        // TODO add your handling code here:
     }//GEN-LAST:event_t1KeyTyped
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_Empleado_Buscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_Empleado_Buscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_Empleado_Buscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_Empleado_Buscar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+        dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_salirActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Frm_Empleado_Buscar().setVisible(true);
-            }
-        });
-    }
+    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+        lblhora.setText(getHora().substring(0, 3));
+        lblminutos.setText(getHora().substring(3, 6));
+        lblsegundos.setText(getHora().substring(6, 8));        // TODO add your handling code here:
+    }//GEN-LAST:event_formInternalFrameActivated
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        lblfecha.setText(fechaActual());        // TODO add your handling code here:
+    }//GEN-LAST:event_formInternalFrameOpened
+
 private TableRowSorter trsFiltro;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabla_em;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblfecha;
+    private javax.swing.JLabel lblhora;
+    private javax.swing.JLabel lblminutos;
+    private javax.swing.JLabel lblsegundos;
     private javax.swing.JRadioButton radioCodigo;
     private javax.swing.JRadioButton radioNombre;
     private javax.swing.JButton salir;
